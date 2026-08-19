@@ -3,43 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1a73e8">
+<meta name="theme-color" content="#0f172a">
 <title>مفقودات شبوة</title>
+<meta name="description" content="منصة مفقودات شبوة - أعلن عن المفقودات والموجودات بسهولة">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
 </head>
 <body>
+
+<!-- Animated background -->
+<div class="bg-animation">
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+</div>
 
 <!-- ===== Header ===== -->
 <header class="header">
   <div class="header-inner">
-    <div class="logo" onclick="showPage('home')">
-      <div class="logo-icon">🔍</div>
-      <span>مفقودات شبوة</span>
+    <div class="logo" onclick="scrollToTop()">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">مفقودات شبوة</span>
+        <span class="logo-sub">منصة المفقودات والموجودات</span>
+      </div>
     </div>
     <div class="nav-actions">
       <button class="btn btn-primary" onclick="openAddModal()">
-        <span>+</span> <span class="btn-text">إضافة إعلان</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="btn-text">إعلان جديد</span>
       </button>
     </div>
   </div>
 </header>
 
+<!-- ===== Hero Section ===== -->
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">وجدت أو فقدت شيئاً؟<br><span class="gradient-text">أعلن عنه هنا</span></h1>
+    <p class="hero-desc">بديل آمن ومنظم لمجموعات الواتساب — انشر مفقوداتك ووجدانك وصل لأصحابها بسرعة</p>
+  </div>
+</section>
+
 <!-- ===== Search & Filter ===== -->
 <div class="search-section">
   <div class="search-inner">
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="ابحث عن مفقوداتك... (اسم، وصف، مكان)" oninput="handleSearch()">
-      <span class="search-icon">🔍</span>
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="ابحث بالاسم، الوصف، أو المكان..." oninput="handleSearch()">
     </div>
     <div class="filter-chips">
       <button class="chip active" data-filter="all" onclick="setFilter('all')">الكل</button>
-      <button class="chip" data-filter="missing" onclick="setFilter('missing')">🔴 مفقود</button>
-      <button class="chip" data-filter="found" onclick="setFilter('found')">🟢 موجود</button>
-      <button class="chip" data-filter="returned" onclick="setFilter('returned')">✅ تم التوصل</button>
+      <button class="chip" data-filter="missing" onclick="setFilter('missing')">مفقود</button>
+      <button class="chip" data-filter="found" onclick="setFilter('found')">موجد</button>
+      <button class="chip" data-filter="returned" onclick="setFilter('returned')">تم الإرجاع</button>
     </div>
   </div>
 </div>
@@ -47,54 +73,51 @@
 <!-- ===== Main ===== -->
 <main class="main">
   <div class="stats-bar">
-    <div class="stat-card">
-      <div class="stat-icon blue">📋</div>
-      <div class="stat-info">
-        <h3 id="totalCount">0</h3>
-        <p>إجمالي الإعلانات</p>
-      </div>
+    <div class="stat-card" style="--stat-color: #3b82f6;">
+      <div class="stat-icon">📋</div>
+      <div class="stat-info"><h3 id="totalCount">0</h3><p>إجمالي الإعلانات</p></div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon red">🔴</div>
-      <div class="stat-info">
-        <h3 id="missingCount">0</h3>
-        <p>مفقود</p>
-      </div>
+    <div class="stat-card" style="--stat-color: #ef4444;">
+      <div class="stat-icon">🔍</div>
+      <div class="stat-info"><h3 id="missingCount">0</h3><p>مفقود</p></div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon green">🟢</div>
-      <div class="stat-info">
-        <h3 id="foundCount">0</h3>
-        <p>موجود</p>
-      </div>
+    <div class="stat-card" style="--stat-color: #22c55e;">
+      <div class="stat-icon">📦</div>
+      <div class="stat-info"><h3 id="foundCount">0</h3><p>موجد</p></div>
     </div>
-    <div class="stat-card">
-      <div class="stat-icon orange">✅</div>
-      <div class="stat-info">
-        <h3 id="returnedCount">0</h3>
-        <p>تم إرجاعه</p>
-      </div>
+    <div class="stat-card" style="--stat-color: #f59e0b;">
+      <div class="stat-icon">✅</div>
+      <div class="stat-info"><h3 id="returnedCount">0</h3><p>تم الإرجاع</p></div>
     </div>
   </div>
 
-  <div class="section-title">
+  <div class="section-header">
     <h2 id="listTitle">أحدث الإعلانات</h2>
+    <span class="result-count" id="resultCount"></span>
   </div>
 
   <div id="postsGrid" class="posts-grid"></div>
   <div id="emptyState" class="empty-state" style="display:none;">
-    <div class="empty-icon">📭</div>
+    <div class="empty-illustration">🔍</div>
     <h3>لا توجد إعلانات</h3>
     <p>كن أول من يضيف إعلاناً عن مفقود أو موجود</p>
+    <button class="btn btn-primary" onclick="openAddModal()">+ إضافة إعلان</button>
   </div>
 </main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <p>مفقودات شبوة © 2026 — منصة مفتوحة لخدمة المجتمع</p>
+</footer>
 
 <!-- ===== Add/Edit Modal ===== -->
 <div class="modal-overlay" id="addModal">
   <div class="modal">
     <div class="modal-header">
       <h2 id="modalTitle">إضافة إعلان جديد</h2>
-      <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+      <button class="modal-close" onclick="closeModal('addModal')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
     <div class="modal-body">
       <form id="postForm" onsubmit="submitPost(event)">
@@ -104,12 +127,16 @@
           <label>نوع الإعلان <span class="req">*</span></label>
           <div class="type-selector">
             <div class="type-option selected" data-type="missing" onclick="selectType('missing')">
-              <div class="type-icon">🔴</div>
+              <div class="type-icon-wrap missing-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </div>
               <div class="type-label">مفقود</div>
               <div class="type-desc">فقدت شيئاً وأبحث عنه</div>
             </div>
             <div class="type-option" data-type="found" onclick="selectType('found')">
-              <div class="type-icon">🟢</div>
+              <div class="type-icon-wrap found-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
               <div class="type-label">موجد</div>
               <div class="type-desc">وجدت شيئاً وأريد إرجاعه</div>
             </div>
@@ -118,12 +145,12 @@
 
         <div class="form-group">
           <label>العنوان <span class="req">*</span></label>
-          <input type="text" id="title" required placeholder="مثال: فقدت جوالي ذو لون أسود" maxlength="80">
+          <input type="text" id="title" required placeholder="مثال: جوالي سامسونج أسود" maxlength="80">
         </div>
 
         <div class="form-group">
           <label>الوصف <span class="req">*</span></label>
-          <textarea id="description" required placeholder="صف المفقود أو الموجود بالتفصيل..." maxlength="500"></textarea>
+          <textarea id="description" required placeholder="صف المفقود أو الموجود بالتفصيل..." maxlength="500" rows="3"></textarea>
         </div>
 
         <div class="form-row">
@@ -141,7 +168,7 @@
               <option value="حيوانات">🐾 حيوانات</option>
               <option value="__custom__">📦 أخرى (مخصص)</option>
             </select>
-            <input type="text" id="customCategory" placeholder="اكتب اسم التصنيف..." maxlength="30" style="display:none; margin-top:8px;" oninput="syncCustomCategory()">
+            <input type="text" id="customCategory" placeholder="اكتب اسم التصنيف..." maxlength="30" style="display:none;" oninput="syncCustomCategory()">
           </div>
           <div class="form-group">
             <label>المكان <span class="req">*</span></label>
@@ -151,7 +178,7 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>الاسم (للتواصل) <span class="req">*</span></label>
+            <label>الاسم <span class="req">*</span></label>
             <input type="text" id="contactName" required placeholder="اسمك" maxlength="40">
           </div>
           <div class="form-group">
@@ -163,18 +190,21 @@
         <div class="form-group">
           <label>صورة (اختياري)</label>
           <label class="image-upload" for="imageInput">
-            <div class="upload-icon">📷</div>
-            <p id="uploadText">اضغط لرفع صورة</p>
+            <div id="uploadArea">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p id="uploadText">اضغط لرفع صورة</p>
+            </div>
             <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
             <img id="imagePreview" class="image-preview" style="display:none;">
           </label>
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:24px;">
-          <button type="submit" class="btn btn-accent" style="flex:1;justify-content:center;">
-            <span>✓</span> نشر الإعلان
+        <div class="form-actions">
+          <button type="submit" class="btn btn-submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            نشر الإعلان
           </button>
-          <button type="button" class="btn btn-outline" onclick="closeModal('addModal')">إلغاء</button>
+          <button type="button" class="btn btn-cancel" onclick="closeModal('addModal')">إلغاء</button>
         </div>
       </form>
     </div>
@@ -186,21 +216,23 @@
   <div class="modal">
     <div class="modal-header">
       <h2>تفاصيل الإعلان</h2>
-      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+      <button class="modal-close" onclick="closeModal('detailModal')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
     <div class="modal-body" id="detailBody"></div>
   </div>
 </div>
 
 <!-- ===== Confirm Dialog ===== -->
-<div class="confirm-overlay" id="confirmOverlay">
+<div class="modal-overlay" id="confirmOverlay">
   <div class="confirm-box">
     <div class="confirm-icon" id="confirmIcon">⚠️</div>
     <h3 id="confirmTitle">تأكيد</h3>
     <p id="confirmText">هل أنت متأكد؟</p>
     <div class="confirm-actions">
-      <button class="btn btn-danger" id="confirmYesBtn" onclick="">نعم</button>
-      <button class="btn btn-outline" onclick="closeConfirm()">إلغاء</button>
+      <button class="btn btn-danger" id="confirmYesBtn">تأكيد</button>
+      <button class="btn btn-cancel" onclick="closeConfirm()">إلغاء</button>
     </div>
   </div>
 </div>
@@ -209,9 +241,10 @@
 <div class="toast" id="toast"></div>
 
 <!-- ===== FAB ===== -->
-<button class="fab" onclick="openAddModal()">+</button>
+<button class="fab" onclick="openAddModal()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+</button>
 
 <script src="script.js"></script>
-
 </body>
 </html>
