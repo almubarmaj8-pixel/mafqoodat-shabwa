@@ -18,6 +18,9 @@
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 <body>
 
@@ -129,90 +132,33 @@
     <div class="modal-body">
       <form id="postForm" onsubmit="submitPost(event)">
         <input type="hidden" id="editId">
-
         <div class="form-group">
           <label>نوع الإعلان <span class="req">*</span></label>
           <div class="type-selector">
             <div class="type-option selected" data-type="missing" onclick="selectType('missing')">
-              <div class="type-icon-wrap missing-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              </div>
+              <div class="type-icon-wrap missing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
               <div class="type-label">مفقود</div>
               <div class="type-desc">فقدت شيئاً وأبحث عنه</div>
             </div>
             <div class="type-option" data-type="found" onclick="selectType('found')">
-              <div class="type-icon-wrap found-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-              </div>
+              <div class="type-icon-wrap found-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
               <div class="type-label">موجد</div>
               <div class="type-desc">وجدت شيئاً وأريد إرجاعه</div>
             </div>
           </div>
         </div>
-
-        <div class="form-group">
-          <label>العنوان <span class="req">*</span></label>
-          <input type="text" id="title" required placeholder="مثال: جوالي سامسونج أسود" maxlength="80">
-        </div>
-
-        <div class="form-group">
-          <label>الوصف <span class="req">*</span></label>
-          <textarea id="description" required placeholder="صف المفقود أو الموجود بالتفصيل..." maxlength="500" rows="3"></textarea>
-        </div>
-
+        <div class="form-group"><label>العنوان <span class="req">*</span></label><input type="text" id="title" required placeholder="مثال: جوالي سامسونج أسود" maxlength="80"></div>
+        <div class="form-group"><label>الوصف <span class="req">*</span></label><textarea id="description" required placeholder="صف المفقود أو الموجود بالتفصيل..." maxlength="500" rows="3"></textarea></div>
         <div class="form-row">
-          <div class="form-group">
-            <label>التصنيف <span class="req">*</span></label>
-            <select id="category" required onchange="handleCategoryChange()">
-              <option value="">اختر...</option>
-              <option value="هواتف">📱 هواتف</option>
-              <option value="مستندات">📄 مستندات</option>
-              <option value="محافظ ونقود">💰 محافظ ونقود</option>
-              <option value="مجوهرات">💎 مجوهرات</option>
-              <option value="مفاتيح">🔑 مفاتيح</option>
-              <option value="ملابس">👕 ملابس</option>
-              <option value="إلكترونيات">💻 إلكترونيات</option>
-              <option value="حيوانات">🐾 حيوانات</option>
-              <option value="__custom__">📦 أخرى (مخصص)</option>
-            </select>
-            <input type="text" id="customCategory" placeholder="اكتب اسم التصنيف..." maxlength="30" style="display:none;" oninput="syncCustomCategory()">
-          </div>
-          <div class="form-group">
-            <label>المكان <span class="req">*</span></label>
-            <input type="text" id="location" required placeholder="مثال: سوق شبوة" maxlength="60">
-          </div>
+          <div class="form-group"><label>التصنيف <span class="req">*</span></label><select id="category" required onchange="handleCategoryChange()"><option value="">اختر...</option><option value="هواتف">📱 هواتف</option><option value="مستندات">📄 مستندات</option><option value="محافظ ونقود">💰 محافظ ونقود</option><option value="مجوهرات">💎 مجوهرات</option><option value="مفاتيح">🔑 مفاتيح</option><option value="ملابس">👕 ملابس</option><option value="إلكترونيات">💻 إلكترونيات</option><option value="حيوانات">🐾 حيوانات</option><option value="__custom__">📦 أخرى (مخصص)</option></select><input type="text" id="customCategory" placeholder="اكتب اسم التصنيف..." maxlength="30" style="display:none;" oninput="syncCustomCategory()"></div>
+          <div class="form-group"><label>المكان <span class="req">*</span></label><input type="text" id="location" required placeholder="مثال: سوق شبوة" maxlength="60"></div>
         </div>
-
         <div class="form-row">
-          <div class="form-group">
-            <label>الاسم <span class="req">*</span></label>
-            <input type="text" id="contactName" required placeholder="اسمك" maxlength="40">
-          </div>
-          <div class="form-group">
-            <label>رقم الجوال <span class="req">*</span></label>
-            <input type="tel" id="contactPhone" required placeholder="7XX XXX XXX" pattern="[0-9+\s-]{8,15}" maxlength="15">
-          </div>
+          <div class="form-group"><label>الاسم <span class="req">*</span></label><input type="text" id="contactName" required placeholder="اسمك" maxlength="40"></div>
+          <div class="form-group"><label>رقم الجوال <span class="req">*</span></label><input type="tel" id="contactPhone" required placeholder="7XX XXX XXX" pattern="[0-9+\s-]{8,15}" maxlength="15"></div>
         </div>
-
-        <div class="form-group">
-          <label>صورة (اختياري)</label>
-          <label class="image-upload" for="imageInput">
-            <div id="uploadArea">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <p id="uploadText">اضغط لرفع صورة</p>
-            </div>
-            <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
-            <img id="imagePreview" class="image-preview" style="display:none;">
-          </label>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-submit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            نشر الإعلان
-          </button>
-          <button type="button" class="btn btn-cancel" onclick="closeModal('addModal')">إلغاء</button>
-        </div>
+        <div class="form-group"><label>صورة (اختياري)</label><label class="image-upload" for="imageInput"><div id="uploadArea"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><p id="uploadText">اضغط لرفع صورة</p></div><input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)"><img id="imagePreview" class="image-preview" style="display:none;"></label></div>
+        <div class="form-actions"><button type="submit" class="btn btn-submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>نشر الإعلان</button><button type="button" class="btn btn-cancel" onclick="closeModal('addModal')">إلغاء</button></div>
       </form>
     </div>
   </div>
@@ -221,12 +167,7 @@
 <!-- ===== Detail Modal ===== -->
 <div class="modal-overlay" id="detailModal">
   <div class="modal">
-    <div class="modal-header">
-      <h2>تفاصيل الإعلان</h2>
-      <button class="modal-close" onclick="closeModal('detailModal')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
+    <div class="modal-header"><h2>تفاصيل الإعلان</h2><button class="modal-close" onclick="closeModal('detailModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
     <div class="modal-body" id="detailBody"></div>
   </div>
 </div>
@@ -237,10 +178,7 @@
     <div class="confirm-icon" id="confirmIcon">⚠️</div>
     <h3 id="confirmTitle">تأكيد</h3>
     <p id="confirmText">هل أنت متأكد؟</p>
-    <div class="confirm-actions">
-      <button class="btn btn-danger" id="confirmYesBtn">تأكيد</button>
-      <button class="btn btn-cancel" onclick="closeConfirm()">إلغاء</button>
-    </div>
+    <div class="confirm-actions"><button class="btn btn-danger" id="confirmYesBtn">تأكيد</button><button class="btn btn-cancel" onclick="closeConfirm()">إلغاء</button></div>
   </div>
 </div>
 
