@@ -55,7 +55,7 @@ function renderCard(p, idx) {
   let statusBadge = p.status === 'returned' ? '<span class="post-type-badge badge-claimed">✅ تم الإرجاع</span>' : '';
   const imageHtml = p.image
     ? `<div class="post-image-wrap"><img src="${p.image}" alt="${escapeHtml(p.title)}">${typeBadge}${statusBadge}</div>`
-    : `<div class="post-image-wrap"><div class="post-image-placeholder">${categoryIcon(p.category)}</div>${typeBadge}${statusBadge}</div>`;
+    : `<div class="post-image-wrap"><div class="post-image-placeholder cat-${p.category}">${categoryIcon(p.category)}</div>${typeBadge}${statusBadge}</div>`;
   const dateStr = formatDate(p.date);
   const actions = p.status === 'returned'
     ? `<button class="btn btn-sm btn-cancel" onclick="event.stopPropagation();deletePost(${p.id})">🗑 حذف</button>`
@@ -127,7 +127,7 @@ function showDetail(id) {
   const p=posts.find(x=>x.id===id); if(!p) return;
   const typeBadge=p.type==='missing'?'🔴 مفقود':'🟢 موجود', statusBadge=p.status==='returned'?' · ✅ تم الإرجاع':'';
   const phoneClean=p.contactPhone.replace(/\s/g,'');
-  const imageHtml=p.image?`<div class="detail-image-wrap"><img src="${p.image}" alt="${escapeHtml(p.title)}"></div>`:`<div class="detail-image-placeholder">${categoryIcon(p.category)}</div>`;
+  const imageHtml=p.image?`<div class="detail-image-wrap"><img src="${p.image}" alt="${escapeHtml(p.title)}"></div>`:`<div class="detail-image-placeholder cat-${p.category}">${categoryIcon(p.category)}</div>`;
   const actionsHtml=p.status==='returned'
     ?`<button class="btn btn-danger" style="width:100%;justify-content:center;" onclick="deletePost(${p.id})">🗑 حذف الإعلان</button>`
     :`<button class="contact-btn" onclick="contactOwner('${phoneClean}')">📞 الاتصال بصاحب الإعلان</button><div style="display:flex;gap:8px;margin-top:8px;"><button class="btn btn-success btn-sm" style="flex:1;justify-content:center;" onclick="markReturned(${p.id})">✓ تم الإرجاع</button><button class="btn btn-cancel btn-sm" style="flex:1;justify-content:center;" onclick="editPost(${p.id})">✏ تعديل</button><button class="btn btn-danger btn-sm" onclick="deletePost(${p.id})">🗑</button></div>`;
