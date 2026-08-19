@@ -1,0 +1,32 @@
+{
+  "name": "مفقودات شبوة",
+  "short_name": "مفقودات شبوة",
+  "description": "منصة مفقودات شبوة - أعلن عن المفقودات والموجودات بسهولة",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0a0f1c",
+  "background_color": "#0a0f1c",
+  "categories": [
+    "utilities",
+    "lifestyle",
+    "social"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
