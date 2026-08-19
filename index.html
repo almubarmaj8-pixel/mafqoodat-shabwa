@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a73e8">
+<title>مفقودات شبوة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-icon">🔍</div>
+      <span>مفقودات شبوة</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-primary" onclick="openAddModal()">
+        <span>+</span> <span class="btn-text">إضافة إعلان</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Search & Filter ===== -->
+<div class="search-section">
+  <div class="search-inner">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="ابحث عن مفقوداتك... (اسم، وصف، مكان)" oninput="handleSearch()">
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="filter-chips">
+      <button class="chip active" data-filter="all" onclick="setFilter('all')">الكل</button>
+      <button class="chip" data-filter="missing" onclick="setFilter('missing')">🔴 مفقود</button>
+      <button class="chip" data-filter="found" onclick="setFilter('found')">🟢 موجود</button>
+      <button class="chip" data-filter="returned" onclick="setFilter('returned')">✅ تم التوصل</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Main ===== -->
+<main class="main">
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-icon blue">📋</div>
+      <div class="stat-info">
+        <h3 id="totalCount">0</h3>
+        <p>إجمالي الإعلانات</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon red">🔴</div>
+      <div class="stat-info">
+        <h3 id="missingCount">0</h3>
+        <p>مفقود</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">🟢</div>
+      <div class="stat-info">
+        <h3 id="foundCount">0</h3>
+        <p>موجود</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon orange">✅</div>
+      <div class="stat-info">
+        <h3 id="returnedCount">0</h3>
+        <p>تم إرجاعه</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2 id="listTitle">أحدث الإعلانات</h2>
+  </div>
+
+  <div id="postsGrid" class="posts-grid"></div>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <div class="empty-icon">📭</div>
+    <h3>لا توجد إعلانات</h3>
+    <p>كن أول من يضيف إعلاناً عن مفقود أو موجود</p>
+  </div>
+</main>
+
+<!-- ===== Add/Edit Modal ===== -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">إضافة إعلان جديد</h2>
+      <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="postForm" onsubmit="submitPost(event)">
+        <input type="hidden" id="editId">
+
+        <div class="form-group">
+          <label>نوع الإعلان <span class="req">*</span></label>
+          <div class="type-selector">
+            <div class="type-option selected" data-type="missing" onclick="selectType('missing')">
+              <div class="type-icon">🔴</div>
+              <div class="type-label">مفقود</div>
+              <div class="type-desc">فقدت شيئاً وأبحث عنه</div>
+            </div>
+            <div class="type-option" data-type="found" onclick="selectType('found')">
+              <div class="type-icon">🟢</div>
+              <div class="type-label">موجد</div>
+              <div class="type-desc">وجدت شيئاً وأريد إرجاعه</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>العنوان <span class="req">*</span></label>
+          <input type="text" id="title" required placeholder="مثال: فقدت جوالي ذو لون أسود" maxlength="80">
+        </div>
+
+        <div class="form-group">
+          <label>الوصف <span class="req">*</span></label>
+          <textarea id="description" required placeholder="صف المفقود أو الموجود بالتفصيل..." maxlength="500"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>التصنيف <span class="req">*</span></label>
+            <select id="category" required onchange="handleCategoryChange()">
+              <option value="">اختر...</option>
+              <option value="هواتف">📱 هواتف</option>
+              <option value="مستندات">📄 مستندات</option>
+              <option value="محافظ ونقود">💰 محافظ ونقود</option>
+              <option value="مجوهرات">💎 مجوهرات</option>
+              <option value="مفاتيح">🔑 مفاتيح</option>
+              <option value="ملابس">👕 ملابس</option>
+              <option value="إلكترونيات">💻 إلكترونيات</option>
+              <option value="حيوانات">🐾 حيوانات</option>
+              <option value="__custom__">📦 أخرى (مخصص)</option>
+            </select>
+            <input type="text" id="customCategory" placeholder="اكتب اسم التصنيف..." maxlength="30" style="display:none; margin-top:8px;" oninput="syncCustomCategory()">
+          </div>
+          <div class="form-group">
+            <label>المكان <span class="req">*</span></label>
+            <input type="text" id="location" required placeholder="مثال: سوق شبوة" maxlength="60">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>الاسم (للتواصل) <span class="req">*</span></label>
+            <input type="text" id="contactName" required placeholder="اسمك" maxlength="40">
+          </div>
+          <div class="form-group">
+            <label>رقم الجوال <span class="req">*</span></label>
+            <input type="tel" id="contactPhone" required placeholder="7XX XXX XXX" pattern="[0-9+\s-]{8,15}" maxlength="15">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>صورة (اختياري)</label>
+          <label class="image-upload" for="imageInput">
+            <div class="upload-icon">📷</div>
+            <p id="uploadText">اضغط لرفع صورة</p>
+            <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
+            <img id="imagePreview" class="image-preview" style="display:none;">
+          </label>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:24px;">
+          <button type="submit" class="btn btn-accent" style="flex:1;justify-content:center;">
+            <span>✓</span> نشر الإعلان
+          </button>
+          <button type="button" class="btn btn-outline" onclick="closeModal('addModal')">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Detail Modal ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>تفاصيل الإعلان</h2>
+      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+    </div>
+    <div class="modal-body" id="detailBody"></div>
+  </div>
+</div>
+
+<!-- ===== Confirm Dialog ===== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirmIcon">⚠️</div>
+    <h3 id="confirmTitle">تأكيد</h3>
+    <p id="confirmText">هل أنت متأكد؟</p>
+    <div class="confirm-actions">
+      <button class="btn btn-danger" id="confirmYesBtn" onclick="">نعم</button>
+      <button class="btn btn-outline" onclick="closeConfirm()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Toast ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== FAB ===== -->
+<button class="fab" onclick="openAddModal()">+</button>
+
+<script src="script.js"></script>
+
+</body>
+</html>
