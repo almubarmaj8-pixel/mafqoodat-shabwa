@@ -1,14 +1,17 @@
 // ===== Service Worker — مفقودات شبوة =====
-const CACHE_NAME = 'mafqoodat-shabwa-v3';
+const CACHE_NAME = 'mafqoodat-shabwa-v4';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './script.js',
+  './firebase-config.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap'
+  'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js'
 ];
 
 self.addEventListener('install', e => {
