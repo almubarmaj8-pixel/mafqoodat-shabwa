@@ -1,204 +1,553 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0f1c">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>مفقودات شبوة | منصة المفقودات والموجودات</title>
+<meta name="description" content="منصة مفقودات شبوة: أعلن عن المفقودات والموجودات في دقيقة، ابحث بالاسم أو المكان، وتواصل مباشرة عبر واتساب. بديل منظّم وآمن لمجموعات الواتساب.">
+<meta name="keywords" content="مفقودات, موجودات, شبوة, اليمن, مفقودات شبوة, أمانات, إرجاع المفقودات">
+<meta name="author" content="مفقودات شبوة">
+<meta name="robots" content="index, follow">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#070b16" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f7fd" media="(prefers-color-scheme: light)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="مفقودات شبوة">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="canonical" href="https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="مفقودات شبوة">
+<meta property="og:locale" content="ar_YE">
+<meta property="og:title" content="مفقودات شبوة | منصة المفقودات والموجودات">
+<meta property="og:description" content="أعلن عن مفقوداتك أو عمّا وجدته، ووصل لأصحابها بسرعة. منصة مجتمعية مجانية وبدون تسجيل.">
+<meta property="og:url" content="https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/">
+<meta property="og:image" content="https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="مفقودات شبوة | منصة المفقودات والموجودات">
+<meta name="twitter:description" content="أعلن عن مفقوداتك أو عمّا وجدته، ووصل لأصحابها بسرعة.">
+<meta name="twitter:image" content="https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/icon-512.png">
+
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>مفقودات شبوة</title>
-<meta name="description" content="منصة مفقودات شبوة - أعلن عن المفقودات والموجودات بسهولة">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!-- ضبط الوضع (ليلي/نهاري) قبل الرسم لتفادي وميض الشاشة -->
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('mss_theme');
+    var sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    document.documentElement.dataset.theme = saved || (sysLight ? 'light' : 'dark');
+  } catch (e) {}
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "مفقودات شبوة",
+  "alternateName": "Mafqoodat Shabwa",
+  "url": "https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/",
+  "inLanguage": "ar",
+  "description": "منصة مجتمعية للإعلان عن المفقودات والموجودات في محافظة شبوة.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 </head>
 <body>
 
-<!-- Animated background -->
-<div class="bg-animation">
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
+<!-- ===== أيقونات SVG ===== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7.5"/><path d="m20.6 20.6-4.4-4.4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.6A8.4 8.4 0 0 1 3.6 12 8.4 8.4 0 1 1 12 20.4a8.4 8.4 0 0 1-3.9-.9L3 21Z"/><path d="M9 9.4c0 2.9 2.6 5.4 5.5 5.5.5 0 1.2-.3 1.4-.9.1-.4-.2-.7-.6-.9l-.9-.5c-.3-.1-.6 0-.8.2l-.5.5a4.8 4.8 0 0 1-2-2l.5-.5c.2-.2.3-.5.2-.8l-.4-.9c-.2-.4-.5-.7-.9-.6-.6.1-1 .8-1 1.3Z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.4 10.8 7.2-4.1M8.4 13.2l7.2 4.1"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.4"/><path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6.5 9.2 17.5 4 12.3"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9.5 7V5.3A1.3 1.3 0 0 1 10.8 4h2.4a1.3 1.3 0 0 1 1.3 1.3V7M6.4 7l.8 12.1A1.9 1.9 0 0 0 9.1 21h5.8a1.9 1.9 0 0 0 1.9-1.9L17.6 7"/><path d="M10.5 11v6M13.5 11v6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7.5 18.5 3 20l1.5-4.5Z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 5h11l-1 3.5L16 12H5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 1 1 10 3.4a7 7 0 0 0 10.5 11.1Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M4 19h16"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10.5c0 5.2-8 11-8 11s-8-5.8-8-11a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10.3" r="2.8"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2.6"/><path d="M8 3v4M16 3v4M3.5 10h17"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13 21a1.9 1.9 0 0 1-2.7 0L3 13.7V3.5h10.2l7.4 7.3a1.9 1.9 0 0 1 0 2.6Z"/><circle cx="7.8" cy="7.8" r="1.4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7.3 8.7 4.8 8.7-4.8M12 21v-9"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.6"/><circle cx="8.8" cy="9.6" r="1.7"/><path d="m4.5 18 4.7-4.7 3.3 3.3 3-2.4 4.5 3.8"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.8 5.8v5.4c0 4.7 3 8.6 7.2 10.2 4.2-1.6 7.2-5.5 7.2-10.2V5.8Z"/><path d="m8.8 11.8 2.4 2.4 4-4.4"/></symbol>
+  <symbol id="i-offline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4.5 21 20.5"/><path d="M8.6 15.2a4.6 4.6 0 0 1 6.6-.4M5 11.8a9.6 9.6 0 0 1 4.2-2.3M15.6 9.7a9.7 9.7 0 0 1 3.4 2.1"/><path d="M12 19.4h.01"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 13.7 9l5.5 1.7-5.5 1.7L12 18l-1.7-5.6L4.8 10.7 10.3 9Z"/><path d="M19 4v3M17.5 5.5h3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9.5 6 6 6-6"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.5 4.5V10h-5.5"/></symbol>
+</svg>
+
+<a class="skip-link" href="#main">تخطَّ إلى المحتوى الرئيسي</a>
+
+<div class="aurora" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
 </div>
 
-<!-- ===== Header ===== -->
-<header class="header">
-  <div class="header-inner">
-    <div class="logo" onclick="scrollToTop()">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-        </svg>
-      </div>
-      <div class="logo-text">
-        <span class="logo-title">مفقودات شبوة</span>
-        <span class="logo-sub">منصة المفقودات والموجودات</span>
-      </div>
-    </div>
-    <div class="nav-actions">
-      <button class="btn btn-primary" onclick="openAddModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-        <span class="btn-text">إعلان جديد</span>
+<!-- ===== الترويسة ===== -->
+<header class="app-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./" data-action="home" aria-label="مفقودات شبوة — الصفحة الرئيسية">
+      <span class="brand-mark"><svg class="ic"><use href="#i-search"></use></svg></span>
+      <span class="brand-text">
+        <strong>مفقودات شبوة</strong>
+        <small>منصة المفقودات والموجودات</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="installBtn" type="button" hidden data-action="install" title="تثبيت التطبيق على جهازك" aria-label="تثبيت التطبيق">
+        <svg class="ic"><use href="#i-download"></use></svg>
+      </button>
+      <button class="icon-btn" type="button" data-action="toggle-theme" title="تبديل الوضع الليلي/النهاري" aria-label="تبديل الوضع الليلي والنهاري">
+        <svg class="ic icon-moon"><use href="#i-moon"></use></svg>
+        <svg class="ic icon-sun"><use href="#i-sun"></use></svg>
+      </button>
+      <button class="btn btn-ghost" type="button" data-action="filter-mine" title="الإعلانات التي أضفتها من هذا الجهاز">
+        <svg class="ic"><use href="#i-user"></use></svg>
+        <span class="hide-sm">إعلاناتي</span>
+        <b class="pill" id="mineCount" hidden>0</b>
+      </button>
+      <button class="btn btn-primary" type="button" data-action="open-add">
+        <svg class="ic"><use href="#i-plus"></use></svg>
+        <span class="hide-xs">إعلان جديد</span>
       </button>
     </div>
   </div>
 </header>
 
-<!-- ===== Hero Section ===== -->
+<!-- ===== شريط الحالة ===== -->
+<div class="banner" id="banner" role="status" hidden>
+  <svg class="ic" id="bannerIcon"><use href="#i-sparkle"></use></svg>
+  <div class="banner-text"><span id="bannerMsg"></span></div>
+  <button class="banner-btn" type="button" id="bannerAction" hidden></button>
+  <button class="banner-x" type="button" data-action="dismiss-banner" aria-label="إغلاق التنبيه"><svg class="ic"><use href="#i-close"></use></svg></button>
+</div>
+
+<!-- ===== الواجهة الترحيبية ===== -->
 <section class="hero">
-  <div class="hero-content">
-    <h1 class="hero-title">وجدت أو فقدت شيئاً؟<br><span class="gradient-text">أعلن عنه هنا</span></h1>
-    <p class="hero-desc">بديل آمن ومنظم لمجموعات الواتساب — انشر مفقوداتك ووجدانك وصل لأصحابها بسرعة</p>
+  <div class="wrap hero-inner">
+    <p class="hero-eyebrow"><span class="dot" aria-hidden="true"></span> مجتمعية · مجانية · بدون تسجيل دخول</p>
+    <h1 class="hero-title">وجدت أو فقدت شيئاً؟<br><span class="grad">أعلن عنه في أقل من دقيقة</span></h1>
+    <p class="hero-desc">
+      بديل منظّم وآمن لمجموعات الواتساب: انشر تفاصيل ما فقدته، أو أعلن عمّا وجدته،
+      ليعود كل شيء إلى صاحبه بسرعة في محافظة شبوة.
+    </p>
+    <div class="hero-cta">
+      <button class="btn btn-primary btn-lg" type="button" data-action="open-add">
+        <svg class="ic"><use href="#i-plus"></use></svg> أضف إعلاناً الآن
+      </button>
+      <a class="btn btn-ghost btn-lg" href="#browse">
+        <svg class="ic"><use href="#i-search"></use></svg> تصفّح الإعلانات
+      </a>
+    </div>
+    <ul class="hero-points">
+      <li><svg class="ic"><use href="#i-check"></use></svg> لا حاجة لحساب أو رقم سري</li>
+      <li><svg class="ic"><use href="#i-check"></use></svg> تواصل مباشر عبر واتساب</li>
+      <li><svg class="ic"><use href="#i-check"></use></svg> يعمل على الجوال دون إنترنت</li>
+    </ul>
   </div>
 </section>
 
-<!-- ===== Search & Filter ===== -->
-<div class="search-section">
-  <div class="search-inner">
-    <div class="search-box">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-      </svg>
-      <input type="text" id="searchInput" placeholder="ابحث بالاسم، الوصف، أو المكان..." oninput="handleSearch()">
+<!-- ===== البحث والفلاتر ===== -->
+<section class="toolbar" id="browse">
+  <div class="wrap">
+    <div class="search-row">
+      <div class="search-box">
+        <svg class="ic search-ic"><use href="#i-search"></use></svg>
+        <input type="search" id="q" autocomplete="off" placeholder="ابحث بالاسم، الوصف، المكان… (مثال: جوالي سامسونج)" aria-label="بحث في الإعلانات">
+        <button class="search-clear" type="button" id="clearQ" data-action="clear-q" aria-label="مسح البحث" hidden>
+          <svg class="ic"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+      <label class="select-wrap">
+        <span class="sr-only">التصنيف</span>
+        <select id="catFilter" class="select">
+          <option value="">كل التصنيفات</option>
+        </select>
+        <svg class="ic"><use href="#i-chevron"></use></svg>
+      </label>
+      <label class="select-wrap">
+        <span class="sr-only">الترتيب</span>
+        <select id="sort" class="select">
+          <option value="new">الأحدث أولاً</option>
+          <option value="old">الأقدم أولاً</option>
+          <option value="views">الأكثر مشاهدة</option>
+        </select>
+        <svg class="ic"><use href="#i-chevron"></use></svg>
+      </label>
     </div>
-    <div class="filter-chips">
-      <button class="chip active" data-filter="all" onclick="setFilter('all')">الكل</button>
-      <button class="chip" data-filter="missing" onclick="setFilter('missing')">مفقود</button>
-      <button class="chip" data-filter="found" onclick="setFilter('found')">موجد</button>
-      <button class="chip" data-filter="returned" onclick="setFilter('returned')">تم الإرجاع</button>
+
+    <div class="chips" role="group" aria-label="تصفية الإعلانات">
+      <button class="chip is-active" type="button" data-filter="all">الكل</button>
+      <button class="chip" type="button" data-filter="missing"><span class="chip-dot d-missing"></span> مفقود</button>
+      <button class="chip" type="button" data-filter="found"><span class="chip-dot d-found"></span> موجود</button>
+      <button class="chip" type="button" data-filter="returned"><span class="chip-dot d-returned"></span> تم الإرجاع</button>
+      <button class="chip" type="button" data-filter="mine"><svg class="ic"><use href="#i-user"></use></svg> إعلاناتي</button>
+    </div>
+
+    <div class="result-line">
+      <span id="resultCount">جارٍ التحميل…</span>
+      <button class="link-btn" type="button" id="resetFilters" data-action="reset-filters" hidden>
+        <svg class="ic"><use href="#i-refresh"></use></svg> مسح الفلاتر
+      </button>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ===== Main ===== -->
-<main class="main">
-  <div class="stats-bar">
-    <div class="stat-card" style="--stat-color: #3b82f6;">
-      <div class="stat-icon">📋</div>
-      <div class="stat-info"><h3 id="totalCount">0</h3><p>إجمالي الإعلانات</p></div>
-    </div>
-    <div class="stat-card" style="--stat-color: #ef4444;">
-      <div class="stat-icon">🔍</div>
-      <div class="stat-info"><h3 id="missingCount">0</h3><p>مفقود</p></div>
-    </div>
-    <div class="stat-card" style="--stat-color: #22c55e;">
-      <div class="stat-icon">📦</div>
-      <div class="stat-info"><h3 id="foundCount">0</h3><p>موجد</p></div>
-    </div>
-    <div class="stat-card" style="--stat-color: #f59e0b;">
-      <div class="stat-icon">✅</div>
-      <div class="stat-info"><h3 id="returnedCount">0</h3><p>تم الإرجاع</p></div>
-    </div>
-  </div>
+<!-- ===== المحتوى ===== -->
+<main id="main" class="wrap main">
 
-  <div class="section-header">
+  <section class="stats" aria-label="إحصاءات">
+    <button class="stat" type="button" data-filter="all" style="--c:#3b82f6">
+      <span class="stat-ic" aria-hidden="true">📋</span>
+      <span class="stat-body"><b id="statTotal">0</b><small>إجمالي الإعلانات</small></span>
+    </button>
+    <button class="stat" type="button" data-filter="missing" style="--c:#ef4444">
+      <span class="stat-ic" aria-hidden="true">🔍</span>
+      <span class="stat-body"><b id="statMissing">0</b><small>مفقود</small></span>
+    </button>
+    <button class="stat" type="button" data-filter="found" style="--c:#22c55e">
+      <span class="stat-ic" aria-hidden="true">📦</span>
+      <span class="stat-body"><b id="statFound">0</b><small>موجود</small></span>
+    </button>
+    <button class="stat" type="button" data-filter="returned" style="--c:#f59e0b">
+      <span class="stat-ic" aria-hidden="true">✅</span>
+      <span class="stat-body"><b id="statReturned">0</b><small>تم إرجاعها</small></span>
+    </button>
+  </section>
+
+  <div class="section-head">
     <h2 id="listTitle">أحدث الإعلانات</h2>
-    <span class="result-count" id="resultCount"></span>
+    <span class="live-badge" id="liveBadge" hidden><span class="live-dot"></span> مزامنة مباشرة</span>
   </div>
 
-  <div id="postsGrid" class="posts-grid"></div>
-  <div id="emptyState" class="empty-state" style="display:none;">
-    <div class="empty-illustration">🔍</div>
-    <h3>لا توجد إعلانات</h3>
-    <p>كن أول من يضيف إعلاناً عن مفقود أو موجود</p>
-    <button class="btn btn-primary" onclick="openAddModal()">+ إضافة إعلان</button>
+  <div class="grid" id="grid" aria-live="polite" aria-busy="true"></div>
+
+  <div class="empty" id="empty" hidden>
+    <div class="empty-art" aria-hidden="true">🔍</div>
+    <h3 id="emptyTitle">لا توجد إعلانات بعد</h3>
+    <p id="emptyText">كن أول من ينشر إعلاناً عن مفقود أو موجود في شبوة.</p>
+    <div class="empty-actions">
+      <button class="btn btn-primary" type="button" data-action="open-add"><svg class="ic"><use href="#i-plus"></use></svg> إضافة إعلان</button>
+      <button class="btn btn-ghost" type="button" data-action="reset-filters" hidden id="emptyReset">مسح الفلاتر</button>
+    </div>
+  </div>
+
+  <div class="load-more">
+    <button class="btn btn-ghost" type="button" id="loadMore" hidden>
+      <svg class="ic"><use href="#i-chevron"></use></svg> عرض إعلانات أقدم
+    </button>
   </div>
 </main>
 
-<!-- ===== Footer ===== -->
-<footer class="footer">
-  <p>مفقودات شبوة © 2026 — منصة مفتوحة لخدمة المجتمع</p>
+<!-- ===== كيف تعمل المنصة ===== -->
+<section class="how">
+  <div class="wrap">
+    <h2>كيف تعمل المنصة؟</h2>
+    <ol class="steps">
+      <li>
+        <span class="step-n">1</span>
+        <h3>أضف إعلانك</h3>
+        <p>حدّد النوع (مفقود أو موجود)، اكتب وصفاً دقيقاً، وأضف صورة واضحة مع مكان وتاريخ الواقعة.</p>
+      </li>
+      <li>
+        <span class="step-n">2</span>
+        <h3>شارك الإعلان</h3>
+        <p>انسخ رابط الإعلان وأرسله في مجموعاتك؛ المشاركة ترفع فرص العثور على صاحب الشيء.</p>
+      </li>
+      <li>
+        <span class="step-n">3</span>
+        <h3>تواصل وأرجِع الأمانة</h3>
+        <p>يتم التواصل مباشرة عبر واتساب أو الاتصال. بعد الاستلام علّم الإعلان بـ«تم الإرجاع».</p>
+      </li>
+    </ol>
+
+    <div class="safety">
+      <div class="safety-head">
+        <svg class="ic"><use href="#i-shield"></use></svg>
+        <h3>نصائح السلامة</h3>
+      </div>
+      <ul>
+        <li>لا تحوّل أي مبالغ مالية مسبقة، ولا تدفع «مكافأة» قبل استلام الشيء ومعاينته.</li>
+        <li>قابل الطرف الآخر في مكان عام مزدحم ويفضّل نهاراً.</li>
+        <li>لا تنشر صوراً تحتوي على معلوماتك الحساسة (رقم الهوية كاملاً، بيانات بنكية).</li>
+        <li>للمستندات والهويات: سلّمها لصاحبها أو لأقرب مركز شرطة عند تعذّر الوصول إليه.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== التذييل ===== -->
+<footer class="app-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark sm"><svg class="ic"><use href="#i-search"></use></svg></span>
+      <div>
+        <strong>مفقودات شبوة</strong>
+        <p>منصة مجتمعية مفتوحة لخدمة أبناء المحافظة — مجانية بالكامل.</p>
+      </div>
+    </div>
+    <nav class="footer-links">
+      <button class="link-btn" type="button" data-action="open-add">إضافة إعلان</button>
+      <a class="link-btn" href="#browse">تصفّح الإعلانات</a>
+      <button class="link-btn" type="button" data-action="open-about">عن المنصة وسياسة الخصوصية</button>
+      <a class="link-btn" href="https://github.com/almubarmaj8-pixel/mafqoodat-shabwa" target="_blank" rel="noopener">الكود المصدري</a>
+    </nav>
+    <p class="footer-note">
+      المحتوى يُنشر من المستخدمين، والمنصة غير مسؤولة عن صحة الإعلانات أو أي تعاملات بين الأطراف.
+      <span class="ver" id="appVersion"></span>
+    </p>
+    <p class="footer-copy">مفقودات شبوة © <span id="year"></span> — رخصة MIT</p>
+  </div>
 </footer>
 
-<!-- ===== Add/Edit Modal ===== -->
-<div class="modal-overlay" id="addModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 id="modalTitle">إضافة إعلان جديد</h2>
-      <button class="modal-close" onclick="closeModal('addModal')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
+<button class="fab" type="button" data-action="open-add" aria-label="إضافة إعلان جديد">
+  <svg class="ic"><use href="#i-plus"></use></svg>
+</button>
+
+<button class="to-top" type="button" id="toTop" aria-label="العودة للأعلى" hidden>
+  <svg class="ic"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<!-- ===== نافذة الإضافة/التعديل ===== -->
+<div class="overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formTitle" hidden>
+  <div class="modal modal-lg sheet">
+    <div class="modal-head">
+      <h2 id="formTitle">إضافة إعلان جديد</h2>
+      <button class="icon-btn" type="button" data-action="close-modal" aria-label="إغلاق"><svg class="ic"><use href="#i-close"></use></svg></button>
     </div>
-    <div class="modal-body">
-      <form id="postForm" onsubmit="submitPost(event)">
-        <input type="hidden" id="editId">
-        <div class="form-group">
-          <label>نوع الإعلان <span class="req">*</span></label>
-          <div class="type-selector">
-            <div class="type-option selected" data-type="missing" onclick="selectType('missing')">
-              <div class="type-icon-wrap missing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
-              <div class="type-label">مفقود</div>
-              <div class="type-desc">فقدت شيئاً وأبحث عنه</div>
-            </div>
-            <div class="type-option" data-type="found" onclick="selectType('found')">
-              <div class="type-icon-wrap found-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-              <div class="type-label">موجد</div>
-              <div class="type-desc">وجدت شيئاً وأريد إرجاعه</div>
-            </div>
-          </div>
+
+    <form id="postForm" class="modal-body" novalidate>
+      <input type="hidden" id="editId">
+
+      <div class="field">
+        <span class="label">نوع الإعلان <b class="req">*</b></span>
+        <div class="type-picker" role="radiogroup" aria-label="نوع الإعلان">
+          <button type="button" class="type-card is-active" role="radio" aria-checked="true" data-type="missing">
+            <span class="type-ic missing"><svg class="ic"><use href="#i-search"></use></svg></span>
+            <span class="type-t">مفقود</span>
+            <span class="type-d">فقدت شيئاً وأبحث عنه</span>
+          </button>
+          <button type="button" class="type-card" role="radio" aria-checked="false" data-type="found">
+            <span class="type-ic found"><svg class="ic"><use href="#i-box"></use></svg></span>
+            <span class="type-t">موجود</span>
+            <span class="type-d">وجدت شيئاً وأريد إرجاعه</span>
+          </button>
         </div>
-        <div class="form-group"><label>العنوان <span class="req">*</span></label><input type="text" id="title" required placeholder="مثال: جوالي سامسونج أسود" maxlength="80"></div>
-        <div class="form-group"><label>الوصف <span class="req">*</span></label><textarea id="description" required placeholder="صف المفقود أو الموجود بالتفصيل..." maxlength="500" rows="3"></textarea></div>
-        <div class="form-row">
-          <div class="form-group"><label>التصنيف <span class="req">*</span></label><select id="category" required onchange="handleCategoryChange()"><option value="">اختر...</option><option value="هواتف">📱 هواتف</option><option value="مستندات">📄 مستندات</option><option value="محافظ ونقود">💰 محافظ ونقود</option><option value="مجوهرات">💎 مجوهرات</option><option value="مفاتيح">🔑 مفاتيح</option><option value="ملابس">👕 ملابس</option><option value="إلكترونيات">💻 إلكترونيات</option><option value="حيوانات">🐾 حيوانات</option><option value="__custom__">📦 أخرى (مخصص)</option></select><input type="text" id="customCategory" placeholder="اكتب اسم التصنيف..." maxlength="30" style="display:none;" oninput="syncCustomCategory()"></div>
-          <div class="form-group"><label>المكان <span class="req">*</span></label><input type="text" id="location" required placeholder="مثال: سوق شبوة" maxlength="60"></div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="fTitle">عنوان الإعلان <b class="req">*</b></label>
+        <input type="text" id="fTitle" maxlength="80" placeholder="مثال: جوال سامسونج أسود بشاشة مكسورة" autocomplete="off">
+        <small class="hint">اكتب وصفاً مختصراً وواضحاً — العنوان الجيد يزيد فرص الإيجاد.</small>
+        <small class="err" data-err="fTitle"></small>
+      </div>
+
+      <div class="field">
+        <label class="label" for="fDesc">الوصف بالتفصيل <b class="req">*</b></label>
+        <textarea id="fDesc" rows="4" maxlength="600" placeholder="اذكر اللون، الماركة، أي علامات مميزة، ومحتويات الشيء إن أمكن…"></textarea>
+        <div class="counter"><span id="descCount">0</span>/600</div>
+        <small class="err" data-err="fDesc"></small>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="fCategory">التصنيف <b class="req">*</b></label>
+          <select id="fCategory">
+            <option value="">اختر التصنيف…</option>
+            <option value="هواتف">📱 هواتف وأجهزة</option>
+            <option value="مستندات">📄 مستندات وهويات</option>
+            <option value="محافظ ونقود">💰 محافظ ونقود</option>
+            <option value="مجوهرات">💎 مجوهرات وساعات</option>
+            <option value="مفاتيح">🔑 مفاتيح</option>
+            <option value="ملابس">👕 ملابس وحقائب</option>
+            <option value="إلكترونيات">💻 إلكترونيات</option>
+            <option value="حيوانات">🐾 حيوانات</option>
+            <option value="مركبات">🚗 مركبات وقطع</option>
+            <option value="__custom__">➕ تصنيف آخر…</option>
+          </select>
+          <input type="text" id="fCustomCat" maxlength="30" placeholder="اكتب اسم التصنيف" hidden>
+          <small class="err" data-err="fCategory"></small>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label>الاسم <span class="req">*</span></label><input type="text" id="contactName" required placeholder="اسمك" maxlength="40"></div>
-          <div class="form-group"><label>رقم الجوال <span class="req">*</span></label><input type="tel" id="contactPhone" required placeholder="7XX XXX XXX" pattern="[0-9+\s-]{8,15}" maxlength="15"></div>
+        <div class="field">
+          <label class="label" for="fLocation">المكان <b class="req">*</b></label>
+          <input type="text" id="fLocation" maxlength="60" placeholder="مثال: سوق عتق المركزي" autocomplete="off">
+          <small class="err" data-err="fLocation"></small>
         </div>
-        <div class="form-group"><label>صورة (اختياري)</label><label class="image-upload" for="imageInput"><div id="uploadArea"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><p id="uploadText">اضغط لرفع صورة</p></div><input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)"><img id="imagePreview" class="image-preview" style="display:none;"></label></div>
-        <div class="form-actions"><button type="submit" class="btn btn-submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>نشر الإعلان</button><button type="button" class="btn btn-cancel" onclick="closeModal('addModal')">إلغاء</button></div>
-      </form>
-    </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="fDate">تاريخ الفقد/الوجدان</label>
+          <input type="date" id="fDate">
+          <small class="err" data-err="fDate"></small>
+        </div>
+        <div class="field">
+          <label class="label" for="fName">الاسم <b class="req">*</b></label>
+          <input type="text" id="fName" maxlength="40" placeholder="اسمك" autocomplete="name">
+          <small class="err" data-err="fName"></small>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="fPhone">رقم الجوال <b class="req">*</b></label>
+          <input type="tel" id="fPhone" maxlength="17" inputmode="tel" placeholder="7XX XXX XXX" autocomplete="tel">
+          <small class="hint">يُقبل الرقم المحلي (7XXXXXXXX) أو الدولي (+967…).</small>
+          <small class="err" data-err="fPhone"></small>
+        </div>
+        <div class="field">
+          <label class="label" for="fPref">طريقة التواصل المفضلة</label>
+          <select id="fPref">
+            <option value="whatsapp">واتساب أولاً</option>
+            <option value="call">اتصال هاتفي أولاً</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="label">الصور (اختياري — حتى 3 صور)</span>
+        <div class="thumbs" id="thumbs"></div>
+        <label class="drop" for="fImages" id="dropZone">
+          <svg class="ic"><use href="#i-image"></use></svg>
+          <span><b>اضغط لإضافة صورة</b> أو التقط صورة بالكاميرا</span>
+          <small>تُضغط الصور تلقائياً على جهازك لتوفير البيانات</small>
+          <input type="file" id="fImages" accept="image/*" multiple hidden>
+        </label>
+      </div>
+
+      <label class="check">
+        <input type="checkbox" id="fAgree">
+        <span>أتعهد بصحة البيانات، وأوافق على أن الإعلان سيُنشر للعامة على المنصة.</span>
+      </label>
+      <small class="err" data-err="fAgree"></small>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+          <svg class="ic"><use href="#i-check"></use></svg> نشر الإعلان
+        </button>
+        <button type="button" class="btn btn-ghost" data-action="close-modal">إلغاء</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<!-- ===== Detail Modal ===== -->
-<div class="modal-overlay" id="detailModal">
-  <div class="modal">
-    <div class="modal-header"><h2>تفاصيل الإعلان</h2><button class="modal-close" onclick="closeModal('detailModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+<!-- ===== نافذة التفاصيل ===== -->
+<div class="overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="modal sheet">
+    <div class="modal-head">
+      <h2 id="detailTitle">تفاصيل الإعلان</h2>
+      <button class="icon-btn" type="button" data-action="close-modal" aria-label="إغلاق"><svg class="ic"><use href="#i-close"></use></svg></button>
+    </div>
     <div class="modal-body" id="detailBody"></div>
   </div>
 </div>
 
-<!-- ===== Confirm Dialog ===== -->
-<div class="modal-overlay" id="confirmOverlay">
-  <div class="confirm-box">
-    <div class="confirm-icon" id="confirmIcon">⚠️</div>
+<!-- ===== نافذة التأكيد ===== -->
+<div class="overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
+  <div class="confirm">
+    <div class="confirm-ic" id="confirmIcon">⚠️</div>
     <h3 id="confirmTitle">تأكيد</h3>
     <p id="confirmText">هل أنت متأكد؟</p>
-    <div class="confirm-actions"><button class="btn btn-danger" id="confirmYesBtn">تأكيد</button><button class="btn btn-cancel" onclick="closeConfirm()">إلغاء</button></div>
+    <div class="confirm-actions">
+      <button class="btn btn-danger" type="button" id="confirmYes">تأكيد</button>
+      <button class="btn btn-ghost" type="button" id="confirmNo">إلغاء</button>
+    </div>
   </div>
 </div>
 
-<!-- ===== Toast ===== -->
-<div class="toast" id="toast"></div>
+<!-- ===== نافذة بلاغ ===== -->
+<div class="overlay" id="reportModal" role="dialog" aria-modal="true" aria-labelledby="reportTitle" hidden>
+  <div class="modal sheet">
+    <div class="modal-head">
+      <h2 id="reportTitle">الإبلاغ عن إعلان</h2>
+      <button class="icon-btn" type="button" data-action="close-modal" aria-label="إغلاق"><svg class="ic"><use href="#i-close"></use></svg></button>
+    </div>
+    <form class="modal-body" id="reportForm">
+      <div class="field">
+        <label class="label" for="reportReason">سبب الإبلاغ</label>
+        <select id="reportReason">
+          <option value="محتوى مخالف">محتوى مخالف أو مسيء</option>
+          <option value="إعلان مكرر">إعلان مكرر</option>
+          <option value="رقم خاطئ">رقم تواصل خاطئ</option>
+          <option value="احتيال">محاولة احتيال</option>
+          <option value="تم الإرجاع">تم إرجاع الشيء بالفعل</option>
+          <option value="أخرى">أخرى</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label" for="reportNote">ملاحظة إضافية (اختياري)</label>
+        <textarea id="reportNote" rows="3" maxlength="300" placeholder="اشرح سبب الإبلاغ باختصار…"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-danger btn-lg">إرسال البلاغ</button>
+        <button type="button" class="btn btn-ghost" data-action="close-modal">إلغاء</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-<!-- ===== FAB ===== -->
-<button class="fab" onclick="openAddModal()">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-</button>
+<!-- ===== نافذة عن المنصة ===== -->
+<div class="overlay" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" hidden>
+  <div class="modal sheet">
+    <div class="modal-head">
+      <h2 id="aboutTitle">عن المنصة والخصوصية</h2>
+      <button class="icon-btn" type="button" data-action="close-modal" aria-label="إغلاق"><svg class="ic"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="modal-body about-body">
+      <p><b>مفقودات شبوة</b> منصة مجتمعية مجانية تساعد أهل محافظة شبوة على إعلان المفقودات والموجودات،
+      كبديل منظّم لمجموعات الواتساب المزدحمة.</p>
+      <h4>ما الذي نجمعه؟</h4>
+      <ul>
+        <li>بيانات الإعلان التي تكتبها بنفسك (العنوان، الوصف، المكان، الاسم، رقم التواصل).</li>
+        <li>رقم جوالك يظهر لمن يفتح الإعلان بهدف التواصل فقط، ويمكنك تعديله أو حذف الإعلان في أي وقت.</li>
+        <li>تُخزَّن مفضّلاتك وإعداداتك محلياً على جهازك، ولا تُرسل لأي طرف ثالث.</li>
+        <li>لا نستخدم أدوات تتبّع إعلانية ولا نطلب تسجيل دخول.</li>
+      </ul>
+      <h4>مسؤولياتك</h4>
+      <ul>
+        <li>الإعلان مسؤوليتك: تأكد من صحة البيانات واحترام خصوصية الآخرين.</li>
+        <li>يمنع نشر المحتوى المخالف أو المنشورات غير المتعلقة بالمفقودات والموجودات.</li>
+        <li>المنصة غير مسؤولة عن أي تعاملات أو أضرار تحدث بين المستخدمين.</li>
+      </ul>
+      <p class="muted">لأي ملاحظة أو طلب حذف إعلان مخالف، استخدم زر «الإبلاغ» داخل الإعلان.</p>
+    </div>
+  </div>
+</div>
 
+<!-- ===== التنبيهات ===== -->
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<noscript>
+  <div class="noscript">هذا التطبيق يحتاج إلى تشغيل JavaScript لعرض الإعلانات وإضافتها.</div>
+</noscript>
+
+<script src="firebase-config.js"></script>
 <script src="script.js"></script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('SW registered:', reg.scope))
-        .catch(err => console.log('SW registration failed:', err));
-    });
-  }
-</script>
 </body>
 </html>
