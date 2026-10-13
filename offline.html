@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b16">
+<title>لا يوجد اتصال — مفقودات شبوة</title>
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+  :root { --bg:#070b16; --surface:rgba(255,255,255,.05); --border:rgba(255,255,255,.1); --text:#eef2f9; --muted:#9aa8c0; --brand:#3b82f6; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    min-height:100vh; display:grid; place-items:center; padding:24px; text-align:center;
+    font-family:'Cairo','Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text);
+    background-image:radial-gradient(circle at 20% 10%, rgba(59,130,246,.18), transparent 45%),
+                     radial-gradient(circle at 80% 90%, rgba(249,115,22,.14), transparent 45%);
+  }
+  .box { max-width:460px; padding:32px 26px; border-radius:22px; background:var(--surface); border:1px solid var(--border); }
+  .ic { font-size:3rem; margin-bottom:12px; }
+  h1 { font-size:1.4rem; margin-bottom:10px; }
+  p { color:var(--muted); font-size:.92rem; line-height:1.8; margin-bottom:20px; }
+  a {
+    display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:12px;
+    background:linear-gradient(135deg,#3b82f6,#6366f1); color:#fff; text-decoration:none; font-weight:700;
+  }
+  small { display:block; margin-top:16px; color:var(--muted); font-size:.78rem; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="ic" aria-hidden="true">📡</div>
+    <h1>لا يوجد اتصال بالإنترنت</h1>
+    <p>
+      أنت تستعرض الآن نسخة محفوظة. الإعلانات التي شاهدتها سابقاً تبقى متاحة،
+      ويمكنك تصفّحها والإعلانات المحفوظة على جهازك بعد عودة التطبيق.
+    </p>
+    <a href="./index.html">↻ إعادة المحاولة</a>
+    <small>يمكنك إضافة إعلانك دون اتصال، وسيُزامن عند عودة الشبكة (عند تفعيل قاعدة البيانات المشتركة).</small>
+  </div>
+  <script>
+    window.addEventListener('online', () => { location.replace('./index.html'); });
+    setTimeout(() => { if (navigator.onLine) location.replace('./index.html'); }, 4000);
+  </script>
+</body>
+</html>

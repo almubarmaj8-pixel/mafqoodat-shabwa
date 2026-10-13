@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b16">
+<title>تفعيل قاعدة البيانات المشتركة — مفقودات شبوة</title>
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+  :root {
+    --bg:#070b16; --panel:#0c1322; --surface:rgba(255,255,255,.05); --surface2:rgba(255,255,255,.09);
+    --border:rgba(255,255,255,.1); --text:#eef2f9; --muted:#9aa8c0; --brand:#3b82f6;
+    --accent:#f97316; --found:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Cairo','Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text);
+    line-height:1.85; padding:0 0 60px;
+    background-image:radial-gradient(circle at 15% 0%, rgba(59,130,246,.16), transparent 45%),
+                     radial-gradient(circle at 85% 100%, rgba(249,115,22,.12), transparent 45%);
+    background-attachment:fixed;
+  }
+  .wrap { max-width:820px; margin:0 auto; padding:0 20px; }
+  header { padding:40px 0 24px; text-align:center; }
+  .logo { width:60px; height:60px; border-radius:18px; margin:0 auto 14px; display:grid; place-items:center;
+          background:linear-gradient(135deg,#3b82f6,#f97316); font-size:26px; }
+  h1 { font-size:clamp(1.4rem,4vw,1.9rem); }
+  .sub { color:var(--muted); font-size:.95rem; margin-top:8px; }
+  .back { display:inline-block; margin-top:16px; color:var(--brand); text-decoration:none; font-weight:700; font-size:.88rem; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:22px; margin-bottom:16px; }
+  h2 { font-size:1.1rem; margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+  .num { width:30px; height:30px; border-radius:9px; display:grid; place-items:center; font-size:.9rem;
+         background:rgba(59,130,246,.16); color:var(--brand); flex:none; }
+  p, li { color:var(--muted); font-size:.92rem; }
+  ol, ul { padding-inline-start:22px; display:grid; gap:8px; }
+  li::marker { color:var(--brand); font-weight:700; }
+  b, strong { color:var(--text); }
+  a { color:var(--brand); }
+  code, pre { font-family:'SF Mono',Consolas,Monaco,monospace; direction:ltr; text-align:left; }
+  code { background:var(--surface2); padding:2px 7px; border-radius:6px; font-size:.85rem; color:#9ecbff; }
+  pre { background:#050810; border:1px solid var(--border); border-radius:12px; padding:16px; overflow-x:auto;
+        font-size:.8rem; line-height:1.7; margin:12px 0; position:relative; }
+  pre code { background:none; padding:0; color:#cbd5e1; }
+  .copy { position:absolute; inset-block-start:10px; inset-inline-end:10px; background:var(--brand); color:#fff;
+          border:0; padding:6px 12px; border-radius:8px; font:inherit; font-size:.75rem; font-weight:700; cursor:pointer;
+          font-family:'Cairo',sans-serif; }
+  .note { display:flex; gap:10px; padding:13px 15px; border-radius:12px; font-size:.87rem; margin:12px 0; }
+  .note.warn { background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.35); }
+  .note.ok { background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.35); }
+  .note.bad { background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.35); }
+  .note span:first-child { flex:none; }
+  table { width:100%; border-collapse:collapse; margin-top:10px; font-size:.86rem; }
+  th, td { text-align:start; padding:10px 12px; border-bottom:1px solid var(--border); }
+  th { color:var(--text); font-size:.82rem; }
+  td { color:var(--muted); }
+  footer { text-align:center; color:var(--muted); font-size:.8rem; padding-top:24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">🔗</div>
+    <h1>تفعيل قاعدة البيانات المشتركة</h1>
+    <p class="sub">اجعل إعلانات منصتك مشتركة بين كل المستخدمين ومتزامنة لحظياً — عبر Firebase Firestore المجاني.</p>
+    <a class="back" href="./index.html">← العودة إلى المنصة</a>
+  </header>
+
+  <div class="note ok">
+    <span>✅</span>
+    <span>الخطة المجانية (Spark) تكفي تماماً لمنصة محلية: 50 ألف قراءة و20 ألف كتابة يومياً، و1 جيجابايت تخزين.</span>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span> إنشاء المشروع</h2>
+    <ol>
+      <li>افتح <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a> وسجّل الدخول بحساب Google.</li>
+      <li>اضغط <b>Create project</b> وسمِّه مثلاً <code>mafqoodat-shabwa</code>.</li>
+      <li>أكمل الخطوات (يمكنك إلغاء تفعيل Google Analytics).</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span> تفعيل تسجيل الدخول المجهول</h2>
+    <ol>
+      <li>من القائمة الجانبية: <b>Build</b> ← <b>Authentication</b> ← تبويب <b>Sign-in method</b>.</li>
+      <li>اضغط <b>Add new provider</b> واختر <b>Anonymous</b> ثم <b>Enable</b> و<b>Save</b>.</li>
+    </ol>
+    <div class="note warn">
+      <span>⚠️</span>
+      <span>هذه الخطوة ضرورية: بدونها لن يستطيع أي مستخدم نشر أو تعديل إعلاناته، لأن قواعد الأمان تمنع الكتابة من غير المسجّلين.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span> إنشاء قاعدة البيانات</h2>
+    <ol>
+      <li>من القائمة الجانبية: <b>Build</b> ← <b>Firestore Database</b> ← <b>Create database</b>.</li>
+      <li>اختر <b>Start in production mode</b> (القواعد الآمنة) ثم اختر أقرب منطقة، مثل <code>eur3</code> أو <code>me-central1</code> إن ظهرت.</li>
+      <li>انتظر حتى تظهر قاعدة البيانات.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span> ضبط قواعد الأمان</h2>
+    <p>افتح تبويب <b>Rules</b> داخل Firestore، امسح كل شيء، والصق هذا النص ثم اضغط <b>Publish</b>:</p>
+    <pre><button class="copy" type="button">نسخ</button><code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isString(v, minLen, maxLen) {
+      return v is string &amp;&amp; v.size() &gt;= minLen &amp;&amp; v.size() &lt;= maxLen;
+    }
+    function validPost(d) {
+      return d.keys().hasOnly(['id','type','title','description','category','location',
+                'contactName','contactPhone','contactPref','images','thumbs','image',
+                'status','date','eventDate','returnedDate','views','ownerId'])
+        &amp;&amp; d.type in ['missing','found']
+        &amp;&amp; d.status in ['active','returned']
+        &amp;&amp; isString(d.title, 4, 90)
+        &amp;&amp; isString(d.description, 12, 700)
+        &amp;&amp; isString(d.category, 1, 30)
+        &amp;&amp; isString(d.location, 2, 70)
+        &amp;&amp; isString(d.contactName, 2, 45)
+        &amp;&amp; isString(d.contactPhone, 7, 20)
+        &amp;&amp; (!('images' in d) || (d.images is list &amp;&amp; d.images.size() &lt;= 3))
+        &amp;&amp; (!('thumbs' in d) || (d.thumbs is list &amp;&amp; d.thumbs.size() &lt;= 3))
+        &amp;&amp; (!('views' in d) || (d.views is int &amp;&amp; d.views &gt;= 0));
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if signedIn()
+        &amp;&amp; validPost(request.resource.data)
+        &amp;&amp; request.resource.data.ownerId == request.auth.uid
+        &amp;&amp; request.resource.data.status == 'active'
+        &amp;&amp; request.resource.data.views == 0;
+      allow update: if signedIn()
+        &amp;&amp; resource.data.ownerId == request.auth.uid
+        &amp;&amp; request.resource.data.ownerId == resource.data.ownerId
+        &amp;&amp; validPost(request.resource.data);
+      allow delete: if signedIn() &amp;&amp; resource.data.ownerId == request.auth.uid;
+    }
+
+    // عدّاد المشاهدات: زيادة بمقدار 1 فقط
+    match /posts/{postId} {
+      allow update: if signedIn()
+        &amp;&amp; request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
+        &amp;&amp; request.resource.data.views == resource.data.views + 1;
+    }
+
+    match /reports/{reportId} {
+      allow create: if signedIn();
+      allow read, update, delete: if false;
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}</code></pre>
+    <div class="note bad">
+      <span>🚫</span>
+      <span>لا تستخدم <code>allow read, write: if true;</code> في الإنتاج — أي شخص سيستطيع حذف كل الإعلانات.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span> نسخ بيانات التطبيق</h2>
+    <ol>
+      <li>اضغط ⚙️ <b>Project settings</b> ← تبويب <b>General</b> ← انزل إلى <b>Your apps</b>.</li>
+      <li>اضغط أيقونة الويب <code>&lt;/&gt;</code>، سمِّ التطبيق ثم <b>Register app</b>.</li>
+      <li>سيظهر كائن <code>firebaseConfig</code> — انسخ القيم.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span> لصق القيم في الموقع</h2>
+    <p>افتح ملف <code>firebase-config.js</code> في مشروعك واستبدل القيم:</p>
+    <pre><button class="copy" type="button">نسخ</button><code>const FIREBASE_CONFIG = {
+  apiKey: "AIza....",
+  authDomain: "mafqoodat-shabwa.firebaseapp.com",
+  projectId: "mafqoodat-shabwa",
+  storageBucket: "mafqoodat-shabwa.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abcdef123456",
+  useAnonymousAuth: true
+};</code></pre>
+    <p>ثم ارفع الملف إلى GitHub (أو احفظه محلياً) وأعد تحميل الصفحة. سيظهر في أعلى المنصة شارة <b>مزامنة مباشرة</b> بدل تنبيه «وضع محلي».</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">7</span> التحقق والإدارة</h2>
+    <table>
+      <thead><tr><th>ما تريد معرفته</th><th>كيف</th></tr></thead>
+      <tbody>
+        <tr><td>هل المزامنة تعمل؟</td><td>افتح المنصة من جهازين، أضف إعلاناً من الأول ولاحظ ظهوره فوراً في الثاني.</td></tr>
+        <tr><td>الإعلانات المنشورة</td><td>Firestore Database ← تبويب <b>Data</b> ← مجموعة <code>posts</code>.</td></tr>
+        <tr><td>البلاغات</td><td>مجموعة <code>reports</code> — راجعها واحذف الإعلان المخالف من مجموعة <code>posts</code>.</td></tr>
+        <tr><td>حذف إعلان مخالف</td><td>افتح الإعلان في Firestore واضغط ⋮ ← <b>Delete document</b>.</td></tr>
+        <tr><td>الفهارس (Indexes)</td><td>إن ظهر خطأ عن فهرس مطلوب، اضغط الرابط في رسالة الخطأ لإنشائه تلقائياً.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span>📌</span>
+    <span>ملاحظة مهمة: المستخدم المحدود يُخزَّن في المتصفح، لذا الإعلان الذي أضفته من جهاز يظهر كـ«إعلانك» على ذلك الجهاز فقط، ويمكنك تعديله وحذفه من هناك.</span>
+  </div>
+
+  <footer>
+    <p>مفقودات شبوة © <span id="y"></span> — رخصة MIT</p>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('code');
+      var text = code.innerText;
+      var done = function () { btn.textContent = 'تم النسخ ✓'; setTimeout(function () { btn.textContent = 'نسخ'; }, 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(fallback); else fallback();
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        ta.remove();
+      }
+    });
+  });
+</script>
+</body>
+</html>

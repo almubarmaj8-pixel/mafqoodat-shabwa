@@ -1,0 +1,99 @@
+rules_version = '2';
+
+// ============================================================================
+//  قواعد أمان Firestore — منصة مفقودات شبوة
+//  انسخ هذا الملف كاملاً والصقه في: Firestore Database > Rules ثم اضغط Publish
+//
+//  الفكرة:
+//   • القراءة متاحة للجميع (المنصة عامة).
+//   • الكتابة تتطلب تسجيل دخول مجهول (Anonymous Auth) — فعّله من Authentication.
+//   • كل مستخدم يعدّل/يحذف إعلاناته هو فقط (ownerId == auth.uid).
+//   • يُسمح للجميع بزيادة عدّاد المشاهدات بمقدار 1 فقط، ودون تغيير أي حقل آخر.
+//   • البلاغات تُكتب فقط ولا تُقرأ من الواجهة.
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isString(v, minLen, maxLen) {
+      return v is string && v.size() >= minLen && v.size() <= maxLen;
+    }
+
+    // التحقق من صحة بيانات الإعلان قبل الحفظ
+    function validPost(d) {
+      return d.keys().hasOnly([
+                'id', 'type', 'title', 'description', 'category', 'location',
+                'contactName', 'contactPhone', 'contactPref', 'images', 'thumbs',
+                'image', 'status', 'date', 'eventDate', 'returnedDate', 'views', 'ownerId'
+              ])
+        && d.type in ['missing', 'found']
+        && d.status in ['active', 'returned']
+        && isString(d.title, 4, 90)
+        && isString(d.description, 12, 700)
+        && isString(d.category, 1, 30)
+        && isString(d.location, 2, 70)
+        && isString(d.contactName, 2, 45)
+        && isString(d.contactPhone, 7, 20)
+        && (!('images' in d) || (d.images is list && d.images.size() <= 3))
+        && (!('thumbs' in d) || (d.thumbs is list && d.thumbs.size() <= 3))
+        && (!('views' in d) || (d.views is int && d.views >= 0))
+        && (!('contactPref' in d) || d.contactPref in ['whatsapp', 'call']);
+    }
+
+    match /posts/{postId} {
+      // القراءة للجميع
+      allow read: if true;
+
+      // الإنشاء: يجب أن يكون المستخدم مسجلاً ومطابقاً لـ ownerId
+      allow create: if signedIn()
+        && validPost(request.resource.data)
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.status == 'active'
+        && request.resource.data.views == 0;
+
+      // التحديث: المالك يعدّل إعلانه
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId
+        && validPost(request.resource.data);
+
+      // الحذف: المالك فقط
+      allow delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    // زيادة عدّاد المشاهدات فقط (بمقدار 1) من أي زائر مسجّل
+    match /posts/{postId} {
+      allow update: if signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
+        && request.resource.data.views == resource.data.views + 1;
+    }
+
+    // البلاغات: تُكتب ولا تُقرأ من التطبيق
+    match /reports/{reportId} {
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['postId', 'postTitle', 'reason', 'note', 'date', 'by'])
+        && isString(request.resource.data.reason, 2, 40)
+        && isString(request.resource.data.postId, 1, 60);
+      allow read, update, delete: if false;
+    }
+
+    // أي مسار آخر: ممنوع
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ============================================================================
+//  بديل سريع للتجربة فقط (غير آمن — لا تستخدمه في الإنتاج):
+//
+//  match /posts/{postId} {
+//    allow read, write: if true;
+//  }
+//
+//  استخدامه يعني أن أي شخص يستطيع حذف أو تعديل كل الإعلانات.
+// ============================================================================

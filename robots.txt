@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /firebase-config.js
+Disallow: /firestore.rules
+Disallow: /*?post=
+
+Sitemap: https://almubarmaj8-pixel.github.io/mafqoodat-shabwa/sitemap.xml

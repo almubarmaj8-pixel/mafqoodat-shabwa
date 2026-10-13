@@ -1,32 +1,53 @@
 {
-  "name": "مفقودات شبوة",
+  "id": "mafqoodat-shabwa",
+  "name": "مفقودات شبوة — منصة المفقودات والموجودات",
   "short_name": "مفقودات شبوة",
-  "description": "منصة مفقودات شبوة - أعلن عن المفقودات والموجودات بسهولة",
+  "description": "أعلن عن المفقودات والموجودات في محافظة شبوة: بحث سريع، صور، وتواصل مباشر عبر واتساب.",
   "lang": "ar",
   "dir": "rtl",
-  "start_url": "./index.html",
+  "start_url": "./index.html?utm_source=pwa",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#0a0f1c",
-  "background_color": "#0a0f1c",
-  "categories": [
-    "utilities",
-    "lifestyle",
-    "social"
-  ],
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "theme_color": "#070b16",
+  "background_color": "#070b16",
+  "categories": ["utilities", "lifestyle", "social"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "إضافة إعلان جديد",
+      "short_name": "إعلان جديد",
+      "description": "انشر إعلان مفقود أو موجود في دقيقة",
+      "url": "./index.html?action=add",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "إعلاناتي",
+      "short_name": "إعلاناتي",
+      "description": "الإعلانات التي أضفتها من هذا الجهاز",
+      "url": "./index.html?f=mine",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
